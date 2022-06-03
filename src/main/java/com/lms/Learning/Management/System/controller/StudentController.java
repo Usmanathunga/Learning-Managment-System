@@ -27,8 +27,12 @@ public class StudentController {
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudent(){
         return ResponseEntity.ok(studentService.getAllStudent());
+    }
 
-
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity deleteStudent(@PathVariable String id){
+        studentService.deleteStudent(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
