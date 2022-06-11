@@ -1,5 +1,4 @@
 // import { cleanup, render } from "@testing-library/react";
-import { CardTitle } from "bootstrap";
 import React, { useEffect, useState } from "react";
 import {
   Row,
@@ -16,19 +15,33 @@ import { MDBContainer, MDBCol, MDBRow } from "mdbreact";
 import axios from "axios";
 
 const ListStudent = () => {
-  const [students, setStudents] = useState([]);
+ 
+  const [students, setStudents] = useState([])
 
-  const loadStudents = () => {
-    studentService.then((response) => {
-      setStudents(response.data);
-      console.log("response", response.data[0]);
-      console.log("students", students);
-    });
-  };
+  const deleteStudent = async (id) => {
+    await axios.delete(`http://localhost:8080/api/student/${id}`)
+    axios
+    .get('http://localhost:8080/api/student')
+      .then(function (response) {
+        setStudents(response.data)
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
 
-
-
-
+  useEffect(() => {
+    axios
+      .get('http://localhost:8080/api/student')
+      .then(function (response) {
+        setStudents(response.data)
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }, [])
 
   return (
     <div>
@@ -41,17 +54,11 @@ const ListStudent = () => {
           <MDBCol>
             <Form>
               <Form.Group className="mb-3" >
-                <Form.Label>First Name</Form.Label>
-                <Form.Control  placeholder="Enter First Name" />
+                <Form.Label>Enter the Name</Form.Label>
+                <Form.Control  placeholder=" Name" />
                
               </Form.Group>
 
-              <Form.Group className="mb-3" >
-                <Form.Label>Second Name</Form.Label>
-                <Form.Control  placeholder="Enter First Name"/>
-              </Form.Group>
-              
-              
             </Form>
             <Row>
               <Col className="mb-1">
@@ -62,7 +69,7 @@ const ListStudent = () => {
                 </Button>
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col className="mb-2">
                 <Button
                   variant="primary"
@@ -74,7 +81,7 @@ const ListStudent = () => {
                   Show All
                 </Button>
               </Col>
-            </Row>
+            </Row> */}
           </MDBCol>
           <MDBCol>
           <div>
@@ -85,22 +92,24 @@ const ListStudent = () => {
 
                   <hr />
                   <div className="d-flex justify-content-end">
-                    <Button onClick={() => {}} variant="outline-success">
+                    <Button onClick={() => {
+                      deleteStudent(student.id);
+                    }} variant="outline-success">
                       Delete
                     </Button>
                   </div>
                 </Alert>
               );
-              console.log("Student", student);
+              
             })}
           </div>
             
           </MDBCol>
 
-          
         </MDBRow>
       </Container>
     </div>
   );
 };
+
 export default ListStudent;
