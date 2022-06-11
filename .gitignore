@@ -30,4 +30,30 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+learning-managment-system/.vscode/
+
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+learning-managment-system/node_modules
+learning-managment-system/.pnp
+learning-managment-system/.pnp.js
+
+# testing
+learning-managment-system/coverage
+
+# production
+learning-managment-system/build
+
+# misc
+learning-managment-system/.DS_Store
+learning-managment-system/.env.local
+learning-managment-system/.env.development.local
+learning-managment-system/.env.test.local
+learning-managment-system/.env.production.local
+
+learning-managment-system/npm-debug.log*
+learning-managment-system/yarn-debug.log*
+learning-managment-system/yarn-error.log*
+
